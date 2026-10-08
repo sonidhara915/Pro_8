@@ -1,243 +1,197 @@
 import numpy as np
+            With the name : numpyanalyzer 
 
 class numpyanalyzer:
-
+    pass
+class numpyanalyzer(numpyanalyzer):
     def __init__(self):
-        self.__current_array = None
+       
+        self.__current_array = None 
         print("Tools are Ready to Analyze with your skill")
 
     def __del__(self):
         print("Analyzer is Ready to Shutdown")
-
+        
     def get_array(self):
         return self.__current_array
-
+        
     def set_array(self, arr):
         self.__current_array = arr
-
+class numpyanalyzer(numpyanalyzer):
     def cre_arr(self, elements_str, rows, cols):
+        
         try:
-            arr = np.fromstring(elements_str, sep=' ').reshape(rows, cols)
+            flat_arr = np.fromstring(elements_str, sep=' ')
+            arr = flat_arr.reshape(rows, cols)
             self.set_array(arr)
             return self.get_array()
-
         except Exception as e:
-            print("Error creating array:", e)
+            print(f"Error creating array: {e}")
             return None
-
-    def math_op(self, elements_str, operation):
+class numpyanalyzer(numpyanalyzer):
+    def math_op(self, elements_str, operation="1"):
+        """Performs element-wise arithmetic array operations or matrices slicing."""
         curr = self.get_array()
-
-        try:
-            if operation == "5":
-                r, c = elements_str.split(',')
-                r_start, r_end = map(int, r.split(':'))
-                c_start, c_end = map(int, c.split(':'))
-                return curr[r_start:r_end, c_start:c_end]
-
+        if operation in ["1", "2", "3", "4"]:
             other = np.fromstring(elements_str, sep=' ').reshape(curr.shape)
+            
             print("\nSecond Array:\n", other)
-
-            if operation == "1":
+            
+            if operation == "1": 
                 return np.add(curr, other)
-
-            elif operation == "2":
+            
+            elif operation == "2": 
                 return np.subtract(curr, other)
-
-            elif operation == "3":
+            
+            elif operation == "3": 
                 return np.multiply(curr, other)
-
-            elif operation == "4":
+            
+            elif operation == "4": 
                 return np.divide(curr, other)
-
-        except Exception as e:
-            print("Error:", e)
-
-    def combine_arr(self, elements_str, mode):
+            
+        elif operation == "5": 
+            
+            r_start, r_end = map(int, elements_str.split(',')[0].split(':'))
+            c_start, c_end = map(int, elements_str.split(',')[1].split(':'))
+            return curr[r_start:r_end, c_start:c_end]
+class numpyanalyzer(numpyanalyzer):
+    def combine_arr(self, elements_str, mode="1"):
+        
         curr = self.get_array()
-
-        try:
-            other = np.fromstring(elements_str, sep=' ').reshape(curr.shape)
-            print("\nSecond Array:\n", other)
-
-            if mode == "1":
-                return np.vstack((curr, other))
-
-            elif mode == "2":
-                return np.hstack((curr, other))
-
-        except Exception as e:
-            print("Error:", e)
-
+        other = np.fromstring(elements_str, sep=' ').reshape(curr.shape)
+        print("\nSecond Array:\n", other)
+        if mode == "1":
+            return np.vstack((curr, other))
+        elif mode == "2":
+            return np.hstack((curr, other))
+class numpyanalyzer(numpyanalyzer):
+    
     def search_val(self, target):
+
         idx = np.where(self.get_array() == target)
         return list(zip(idx[0], idx[1]))
-
+class numpyanalyzer(numpyanalyzer):
+    
     def sort_arr(self):
+       
         return np.sort(self.get_array(), axis=-1)
-
+class numpyanalyzer(numpyanalyzer):
+    
     def filter_greater(self, limit):
+       
         return self.get_array()[self.get_array() > limit]
+class numpyanalyzer(numpyanalyzer):
+    def run_aggregations(self, op_choice):
+        curr = self.get_array()
+        
+        if op_choice == "1": 
+            print("Sum of Array:", np.sum(curr))
 
-    def statistics(self, choice):
-        arr = self.get_array()
+        elif op_choice == "2": 
+            print("Mean of Array:", np.mean(curr))
 
-        if choice == "1":
-            print("Sum:", np.sum(arr))
+class numpyanalyzer(numpyanalyzer):
 
-        elif choice == "2":
-            print("Mean:", np.mean(arr))
+    def run_statistics(self, op_choice):
+        curr = self.get_array()
+        
+        if op_choice == "3": 
+            print("Median of Array:", np.median(curr))
 
-        elif choice == "3":
-            print("Median:", np.median(arr))
+        elif op_choice == "4": 
+            print("Standard Deviation:", np.std(curr))
 
-        elif choice == "4":
-            print("Standard Deviation:", np.std(arr))
-
-        elif choice == "5":
-            print("Variance:", np.var(arr))
-
+        elif op_choice == "5": 
+            print("Variance of Array:", np.var(curr))
 
 def start_menu():
     analyzer = numpyanalyzer()
-
+    
     while True:
-
-        print("Choose an option:")
-        print("1. Create a Numpy Array")
-        print("2. Mathematical Operation")
-        print("3. Combine Arrays")
-        print("4. Search, Sort or Filter")
-        print("5. Aggregates and Statistics")
-        print("6. Exit")
-
+        print("\nChoose an option:")
+        print("1. Create a Numpy Array.")
+        print("2. Perform Methamatical Operation.")
+        print("3. Combine or Split Arrays.")
+        print("4. Search,Sort or Filter Arrays.")
+        print("5. Compute Aggregates and Statistics.")
+        print("6. Exit.")
+        
         choice = input("Enter your choice: ").strip()
-
+        
         if choice == "1":
-
-            print("1. 1D Array")
-            print("2. 2D Array")
-            print("3. 3D Array")
-
-            arr_type = input("Enter array type: ")
-
-            if arr_type == "1":
-
-                elements = input("Enter elements separated by space: ")
-                arr = np.fromstring(elements, sep=' ')
-
-                analyzer.set_array(arr)
-                print("\nArray created successfully:")
-                print(arr)
-
-            elif arr_type == "2":
-
-                rows = int(input("Enter number of rows: "))
-                cols = int(input("Enter number of columns: "))
-
-                elements = input(f"Enter {rows * cols} elements separated by space: ")
-
-                print("\nArray created successfully:\n",analyzer.cre_arr(elements, rows, cols))
-
-            elif arr_type == "3":
-
-                x = int(input("Enter number of blocks: "))
-                rows = int(input("Enter number of rows: "))
-                cols = int(input("Enter number of columns: "))
-
-                elements = input(f"Enter {x * rows * cols} elements separated by space: ")
-
-                try:
-                    arr = np.fromstring(elements, sep=' ')
-                    arr = arr.reshape(x, rows, cols)
-                    analyzer.set_array(arr)
-                    print("\n3D Array created successfully:")
-                    print(arr)
-
-                except Exception as e:
-                    print("Error:", e)
-
+            print("Which type of Array You have to Creat")
+            print("\n 1. 1D Array")
+            print("\n 2. 2D Array")
+            print("\n 3. 3D Array")
+            
+            rows = int(input("Enter the number of rows: "))
+            cols = int(input("Enter the number of columns: "))
+            elements = input(f"Enter {rows*cols} elements separated by space: ")
+            print("\nArray created successfully:\n", analyzer.cre_arr(elements, rows, cols))
+            
         elif choice == "2":
+            print("\n1. Addition") 
+            print("\n2. Subtraction" )
+            print("\n3. Multiplication" )
+            print("\n4. Division" )
+            print("\n5. Slicing")
 
-            print("1. Addition")
-            print("2. Subtraction")
-            print("3. Multiplication")
-            print("4. Division")
-            print("5. Slicing")
-
-            op = input("Enter your choice: ")
-
+            op = input("Enter your choice: ").strip()
             if op == "5":
-
-                slice_range = input("Enter range (row_start:row_end,col_start:col_end): ")
-                print("\nSliced Array:\n",analyzer.math_op(slice_range, "5"))
-
+                slice_range = input("Enter ranges as 'row_start:row_end,col_start:col_end' (e.g., 0:2,1:3): ")
+                print("\nSliced Array:\n", analyzer.math_op(slice_range, "5"))
             else:
-
-                elements = input("Enter same-size array elements separated by space: ")
-                print("\nOriginal Array:")
-                print(analyzer.get_array())
-                print("\nResult:")
-                print(analyzer.math_op(elements, op))
-
+                elements = input("Enter the same-size array elements separated by space: ")
+                print("\nOriginal Array:\n", analyzer.get_array())
+                print("\nResult:\n", analyzer.math_op(elements, op))
+                
         elif choice == "3":
-
-            print("1. Vertical Stack")
-            print("2. Horizontal Stack")
-
-            mode = input("Enter your choice: ")
-
-            elements = input("Enter elements of another array: ")
-
-            print("\nOriginal Array:")
-            print(analyzer.get_array())
-
-            print("\nCombined Array:")
-            print(analyzer.combine_arr(elements, mode))
-
+            print("\n1. Combine Arrays (Vertical Stack)\n2. Combine Arrays (Horizontal Stack)")
+            mode = input("Enter your choice: ").strip()
+            elements = input("Enter the elements of another array to combine: ")
+            print("\nOriginal Array:\n", analyzer.get_array())
+            print("\nCombined Array:\n", analyzer.combine_arr(elements, mode))
+            
         elif choice == "4":
+            print("\n1. Search a value")
+            print("\n2. Sort the array")
+            print("\n3. Filter values")
 
-            print("1. Search a value")
-            print("2. Sort the array")
-            print("3. Filter values")
-
-            sub = input("Enter your choice: ")
-
-            print("\nOriginal Array:")
-            print(analyzer.get_array())
+            sub = input("Enter your choice: ").strip()
+            
+            print("\nOriginal Array:\n", analyzer.get_array())
 
             if sub == "1":
                 target = float(input("Enter target value: "))
-                print("Coordinates:",analyzer.search_val(target)
+                print("Coordinates positions:", analyzer.search_val(target))
 
             elif sub == "2":
-                print("\nSorted Array:\n",analyzer.sort_arr())
+                print("\nSorted Array:\n", analyzer.sort_arr())
+                print("(Sorting applied row-wise.)")
 
             elif sub == "3":
                 limit = float(input("Filter values greater than: "))
-                print("Filtered numbers:",analyzer.filter_greater(limit))
-
+                print("Filtered numbers:", analyzer.filter_greater(limit))
+                
         elif choice == "5":
+            print("\nChoose an aggregate/statistical operation:")
+            print("\n1. Sum")
+            print("\n2. Mean")
+            print("\n3. Median")
+            print("\n4. Standard Deviation")
+            print("\n5. Variance")
 
-            print("1. Sum")
-            print("2. Mean")
-            print("3. Median")
-            print("4. Standard Deviation")
-            print("5. Variance")
-
-            op = input("Enter your choice: ")
-
-            print("\nOriginal Array:")
-            print(analyzer.get_array())
-            analyzer.statistics(op)
-
+            op_choice = input("Enter your choice: ").strip()
+            
+            print("\nOriginal Array:\n", analyzer.get_array())
+            
+            if op_choice in ["1", "2"]:
+                analyzer.run_aggregations(op_choice)
+            elif op_choice in ["3", "4", "5"]:
+                analyzer.run_statistics(op_choice)
+                
         elif choice == "6":
             print("\nThank you for using the NumPy Analyzer! Goodbye!")
             del analyzer
             break
-
-        else:
-            print("Invalid choice.")
-
-
 start_menu()
