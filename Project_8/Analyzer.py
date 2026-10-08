@@ -208,7 +208,7 @@ def start_menu():
 
             if sub == "1":
                 target = float(input("Enter target value: "))
-                print("Coordinates:",analyzer.search_val(target)
+                print("Coordinates:",analyzer.search_val(target))
 
             elif sub == "2":
                 print("\nSorted Array:\n",analyzer.sort_arr())
